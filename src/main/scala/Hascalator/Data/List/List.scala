@@ -85,7 +85,7 @@ object List {
         while (it.hasNext) {
             list = it.next() !:: list
         }
-        
+
         list
     }
 
