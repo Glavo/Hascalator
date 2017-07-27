@@ -1,6 +1,6 @@
 package Hascalator.Prelude
 
-import Hascalator._
+import Hascalator.{Data, _}
 
 /**
   * The character type Char is an enumeration whose values
@@ -19,7 +19,8 @@ import Hascalator._
   */
 final class Char(@inline
                  @NotNull
-                 val self: Character) {
+                 val self: Character) extends Base {
+
     {
         requireNonNull(self)
     }
@@ -29,7 +30,7 @@ final class Char(@inline
     override def toString = self.toString
 
     @inline
-    override def hashCode(): Int = self.hashCode()
+    override def hashCode(): scala.Int = self.hashCode()
 
     @inline
     override def equals(obj: scala.Any): Boolean = {
@@ -67,7 +68,7 @@ object Char {
             val i = t1.self.compareTo(t2.self)
 
             if (i < 0) LT
-            else if(i == 0) EQ
+            else if (i == 0) EQ
             else GT
         }
     }

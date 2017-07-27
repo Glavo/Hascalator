@@ -1,3 +1,6 @@
+import Hascalator.Data.Int.Int
+import Hascalator.Data.List
+import Hascalator.Data.List.{List, ConsWrapper}
 import Hascalator.Prelude
 import Hascalator.Prelude.{Bool, False, True}
 
@@ -14,6 +17,10 @@ package object Hascalator {
     type NotNull = org.jetbrains.annotations.NotNull
 
     type ⊥ = scala.Nothing
+
+    type `_|_` = scala.Nothing
+
+    type Int = Data.Int.Int
 
     /**
       * Checks that the specified object reference is not `null`. This
@@ -47,4 +54,7 @@ package object Hascalator {
         if (b == True) true
         else false
     }
+
+    @inline
+    implicit def any[A](a: A): Any[A] = new Any(a)
 }

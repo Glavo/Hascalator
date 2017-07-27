@@ -1,6 +1,5 @@
-package Hascalator
+package Hascalator.Prelude
 
-import Hascalator.Prelude.{False, True}
 import org.scalatest._
 
 /**

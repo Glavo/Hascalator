@@ -1,5 +1,7 @@
 package Hascalator.Prelude
 
+import Hascalator.Base
+
 /**
   * Created by Glavo on 17-7-26.
   *
@@ -7,4 +9,5 @@ package Hascalator.Prelude
   * @since 0.1.0
   */
 final class Ordering private[Prelude](override val toString: String,
-                                      override val hashCode: Int)
+                                      override val hashCode: Int)  extends Base
+

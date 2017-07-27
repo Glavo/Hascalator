@@ -1,12 +1,15 @@
 package Hascalator.Prelude
 
 import Hascalator._
+
+import scala.annotation.implicitNotFound
 /**
   * Created by Glavo on 17-7-26.
   *
   * @author Glavo
   * @since 0.1.0
   */
+@implicitNotFound("No instance for Ord[${T}]")
 abstract class Ord[T] {
     def compare(@NotNull t1: T)(@NotNull t2: T): Ordering
 

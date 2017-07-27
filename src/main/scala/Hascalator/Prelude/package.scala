@@ -1,6 +1,7 @@
 package Hascalator
 
 import scala.language.implicitConversions
+import Data.List._
 
 /**
   * The [[Hascalator.Prelude]]: a standard module. The Prelude is imported
@@ -12,6 +13,20 @@ import scala.language.implicitConversions
   * @since 0.1.0
   */
 package object Prelude {
+
+    def error(message: String = "bad argument"): ⊥ = throw new Exception(message)
+
+    //Function
+
+    @inline
+    def id[A](it: A): A = it
+
+    @inline
+    def const[A, B](a: A)(b: B): A = a
+
+    @inline
+    def flip[A, B, C](@NotNull f: A => B => C): B => A => C =
+        b => a => f(a)(b)
 
     //data Bool
 
@@ -77,7 +92,6 @@ package object Prelude {
       */
     @inline
     def maybe[A, B](b: B)(@NotNull f: A => B)(@NotNull m: Maybe[A]): B = {
-        Nil.fold _
         requireNonNull(f)
         requireNonNull(m) match {
             case Just(value) => f(value)
@@ -117,11 +131,11 @@ package object Prelude {
     @NotNull
     implicit def charToCh(c: scala.Char): Char = new Char(c)
 
-    /*
+
     @inline
     implicit def chToChar(@NotNull ch: Char): scala.Char =
         requireNonNull(ch).self
-*/
+
     @inline
     @NotNull
     implicit def chToCharacter(@NotNull ch: Char): Character =
@@ -138,14 +152,14 @@ package object Prelude {
       */
     @inline
     def fst[A, B](@NotNull t: (A, B)): A =
-        requireNonNull(t)._1
+    requireNonNull(t)._1
 
     /**
       * Extract the second component of a pair.
       */
     @inline
     def snd[A, B](@NotNull t: (A, B)): B =
-        requireNonNull(t)._2
+    requireNonNull(t)._2
 
     /**
       * curry converts an uncurried function to a curried function.
@@ -173,6 +187,72 @@ package object Prelude {
 
     @inline
     @NotNull
-    implicit def toOrdImpl[T : Ord](t: T): Ord.Impl[T] =
+    implicit def toOrdImpl[T: Ord](t: T): Ord.Impl[T] =
         new Ord.Impl[T](t)
+
+    @inline
+    @NotNull
+    def compare[T: Ord](t1: T)(t2: T): Ordering =
+        implicitly[Ord[T]].compare(t1)(t2)
+
+    @inline
+    @NotNull
+    final def <[T: Ord](@NotNull t1: T)(@NotNull t2: T): Bool =
+        compare(t1)(t2) match {
+            case LT => True
+            case EQ => False
+            case GT => False
+        }
+
+    @inline
+    @NotNull
+    final def <=[T: Ord](@NotNull t1: T)(@NotNull t2: T): Bool =
+        compare(t1)(t2) match {
+            case LT => True
+            case EQ => True
+            case GT => False
+        }
+
+    @inline
+    @NotNull
+    final def >[T: Ord](@NotNull t1: T)(@NotNull t2: T): Bool =
+        compare(t1)(t2) match {
+            case LT => False
+            case EQ => False
+            case GT => True
+        }
+
+    @inline
+    @NotNull
+    final def >=[T: Ord](@NotNull t1: T)(@NotNull t2: T): Bool =
+        compare(t1)(t2) match {
+            case LT => False
+            case EQ => True
+            case GT => True
+        }
+
+    @inline
+    @NotNull
+    def max[T: Ord](@NotNull t1: T)(@NotNull t2: T): T =
+        compare(t1)(t2) match {
+            case LT => t2
+            case _ => t1
+        }
+
+    @inline
+    @NotNull
+    def min[T: Ord](@NotNull t1: T)(@NotNull t2: T): T =
+        compare(t1)(t2) match {
+            case LT => t1
+            case _ => t2
+        }
+
+    //type class Enum
+
+    //TODO
+
+    //List
+
+    def cycle[A](l: List[A]): List[A] = ???
+
 }
