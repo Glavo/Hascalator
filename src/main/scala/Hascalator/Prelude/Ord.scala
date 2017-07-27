@@ -67,7 +67,7 @@ abstract class Ord[T] {
 }
 
 object Ord {
-    class Impl[T : Ord](@inline val self: T) {
+    final class Impl[T : Ord](@inline val self: T) {
 
         @inline
         @NotNull

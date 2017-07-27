@@ -2,6 +2,7 @@ package Hascalator
 
 import scala.language.implicitConversions
 import Data.List._
+import Hascalator.Data.Ratio.Ratio
 
 /**
   * The [[Hascalator.Prelude]]: a standard module. The Prelude is imported
@@ -15,6 +16,8 @@ import Data.List._
 package object Prelude {
 
     def error(message: String = "bad argument"): ⊥ = throw new Exception(message)
+
+    //Basic data types
 
     //Function
 
@@ -182,6 +185,7 @@ package object Prelude {
         pair => f(pair._1)(pair._2)
     }
 
+    //Basic type classes
 
     //type class Ord
 
@@ -249,10 +253,112 @@ package object Prelude {
 
     //type class Enum
 
-    //TODO
+    @inline
+    implicit def toEnumImpl[E : Enum](e: E): Enum.Impl[E] =
+        new Enum.Impl[E](e)
+
+    @inline
+    def succ[E : Enum](e: E): E =
+        implicitly[Enum[E]].succ(e)
+
+    @inline
+    def pred[E : Enum](e: E): E =
+        implicitly[Enum[E]].pred(e)
+
+    @inline
+    def toEnum[E : Enum](i: Int): E =
+        implicitly[Enum[E]].toEnum(i)
+
+    @inline
+    def fromEnum[E : Enum](e: E): Int =
+        implicitly[Enum[E]].fromEnum(e)
+
+    @inline
+    def enumFrom[E : Enum](e: E): List[E] =
+        implicitly[Enum[E]].enumFrom(e)
+
+    @inline
+    def enumFromThen[E : Enum](e1: E)(e2: E): List[E] =
+        implicitly[Enum[E]].enumFromThen(e1)(e2)
+
+    @inline
+    def enumFromTo[E : Enum](e1: E)(e2: E): List[E] =
+        implicitly[Enum[E]].enumFromTo(e1)(e2)
+
+    @inline
+    def enumFromThenTo[E : Enum](e1: E)(e2: E)(e3: E): List[E] =
+        implicitly[Enum[E]].enumFromThenTo(e1)(e2)(e3)
+
+    //type class Bounded
+
+    @inline
+    def minBound[B : Bounded]: B =
+        implicitly[Bounded[B]].minBound
+
+    @inline
+    def maxBound[B : Bounded]: B =
+        implicitly[Bounded[B]].maxBound
+
+    //Numbers
+
+    //Numeric types
+
+    type Int = Data.Int.Int
+
+    type Integer = scala.BigInt
+
+    /**
+      * Single-precision floating point numbers. It is desirable that this type
+      * be at least equal in range and precision to the IEEE single-precision type.
+      */
+    type Float = scala.Float
+
+    /**
+      * Double-precision floating point numbers. It is desirable that this type
+      * be at least equal in range and precision to the IEEE double-precision type.
+      */
+    type Double = scala.Double
+
+    /**
+      * Arbitrary-precision rational numbers, represented as a ratio of two
+      * Integer values. A rational number may be constructed using the % operator.
+      */
+    type Rational = Ratio[Integer]
+
+
+    //Numeric type classes
+
+    //type class Num
+
+    /**
+      * Unary negation.
+      */
+    def negate[A : Num](a: A): A =
+        implicitly[Num[A]].negate(a)
+
+    /**
+      * Absolute value.
+      */
+    def abs[A : Num](a: A): A =
+        implicitly[Num[A]].abs(a)
+
+    /**
+      * Sign of a number.
+      */
+    def signum[A : Num](a: A): A =
+        implicitly[Num[A]].signum(a)
+
+    /**
+      * Conversion from an Integer. An integer literal represents the application
+      * of the function fromInteger to the appropriate value of type Integer,
+      * so such literals have type A : Num.
+      */
+    def fromInteger[A : Num](i: Integer): A =
+        implicitly[Num[A]].fromInteger(i)
 
     //List
 
-    def cycle[A](l: List[A]): List[A] = ???
+    def cycle[A](l: List[A]): List[A] =
+        l ++ cycle(l)
 
 }

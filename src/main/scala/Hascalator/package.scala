@@ -56,5 +56,5 @@ package object Hascalator {
     }
 
     @inline
-    implicit def any[A](a: A): Any[A] = new Any(a)
+    implicit def byLazy[A](f: => A): Lazy[A] = new Lazy[A](() => f)
 }

@@ -5,7 +5,6 @@ import Data.Function._
 
 import scala.annotation.unchecked.uncheckedStable
 import scala.annotation.varargs
-import scala.collection.immutable.Stream
 import scala.language.implicitConversions
 
 /**
@@ -51,7 +50,7 @@ abstract sealed class List[+A] extends Base {
     protected def tailDefined: Boolean
 
     @inline
-    final def ++[B >: A](other: List[B]): List[B] = this match {
+    final def ++[B >: A](other: => List[B]): List[B] = this match {
         case head :: tail => head :: (tail ++ other)
         case Nil => other
     }
@@ -81,8 +80,12 @@ object List {
 
     def apply[A](@varargs args: A*): List[A] = {
         var list: List[A] = Nil
-        args.reverseIterator
+        val it = args.reverseIterator
 
+        while (it.hasNext) {
+            list = it.next() !:: list
+        }
+        
         list
     }
 
