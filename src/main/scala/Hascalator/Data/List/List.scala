@@ -14,34 +14,20 @@ import scala.language.implicitConversions
   * @since 0.1.0
   */
 abstract sealed class List[+A] extends Base {
-    /** Indicates whether or not the `Stream` is empty.
-      *
-      * @return `true` if the `Stream` is empty and `false` otherwise.
+
+    /**
+      * Indicates whether or not the `List` is empty.
       */
     def isEmpty: Boolean
 
-    /** Gives constant time access to the first element of this `Stream`.  Using
-      * the `fibs` example from earlier:
-      *
-      * {{{
-      * println(fibs head)
-      * // prints
-      * // 0
-      * }}}
-      *
-      * @return The first element of the `Stream`.
-      * @throws java.util.NoSuchElementException if the stream is empty.
+    /**
+      * Gives constant time access to the first element of this `List`.
       */
     def head: A
 
-    /** A stream consisting of the remaining elements of this stream after the
+    /**
+      * A list consisting of the remaining elements of this list after the
       * first one.
-      *
-      * Note that this method does not force evaluation of the `Stream` but merely
-      * returns the lazy result.
-      *
-      * @return The tail of the `Stream`.
-      * @throws UnsupportedOperationException if the stream is empty.
       */
     def tail: List[A]
 

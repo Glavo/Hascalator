@@ -7,7 +7,7 @@ import Hascalator.Prelude.{Bool, False, True}
 import scala.language.implicitConversions
 
 /**
-  * Created by Glavo on 17-7-26.
+  * Root package of Hascalator.
   *
   * @author Glavo
   * @since 0.1.0
@@ -26,11 +26,6 @@ package object Hascalator {
       * Checks that the specified object reference is not `null`. This
       * method is designed primarily for doing parameter validation in methods
       * and constructors, as demonstrated below:
-      *
-      * @param obj the object reference to check for nullity
-      * @tparam T the type of the reference
-      * @return `obj` if not `null`
-      * @throws NullPointerException if `obj` is `null`
       */
     @inline
     @NotNull
