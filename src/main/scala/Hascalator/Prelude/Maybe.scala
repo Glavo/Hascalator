@@ -19,17 +19,19 @@ import Hascalator._
 abstract sealed class Maybe[+T] protected extends Base {
 
     @inline
-    @NotNull
     def isEmpty: Bool =
         if (this == Nothing) True
         else False
+
 }
 
 object Maybe {
-    @inline
-    implicit def eqMaybe[L, R](implicit eq: Eq[L, R]): Eq[Maybe[L], Maybe[R]] = Eq
 }
 
 case class Just[+T](@NotNull value: T) extends Maybe[T]
 
-case object Nothing extends Maybe[⊥]
+object Just {
+}
+
+case object Nothing extends Maybe[⊥] {
+}

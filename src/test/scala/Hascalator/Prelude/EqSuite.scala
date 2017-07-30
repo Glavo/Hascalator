@@ -1,6 +1,8 @@
 package Hascalator.Prelude
 
-import org.scalatest.FlatSpec
+import Hascalator._
+
+import org.scalatest._
 
 /**
   * Created by Glavo on 17-7-30.
@@ -8,6 +10,6 @@ import org.scalatest.FlatSpec
   * @author Glavo
   * @since 0.1.0
   */
-class EqSpec extends FlatSpec {
+class EqSuite extends FunSuite {
 
 }

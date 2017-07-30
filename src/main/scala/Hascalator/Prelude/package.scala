@@ -33,13 +33,10 @@ package object Prelude {
 
     //data Bool
 
-    @NotNull
     val True: Bool = new Bool("True", 1)
-    @NotNull
     val False: Bool = new Bool("False", 0)
 
     @inline
-    @NotNull
     implicit def functionWapper[T1, R](@NotNull f: T1 => R): Prelude.Function[T1, R] = {
         new Prelude.Function(requireNonNull(f))
     }
@@ -48,7 +45,6 @@ package object Prelude {
       * Boolean "and"
       */
     @inline
-    @NotNull
     def &&(@NotNull b1: Bool, @NotNull b2: Bool): Bool = {
         requireNonNull(b1) && b2
     }
@@ -57,7 +53,6 @@ package object Prelude {
       * Boolean "or"
       */
     @inline
-    @NotNull
     def ||(@NotNull b1: Bool, @NotNull b2: Bool): Bool = {
         requireNonNull(b1) || b2
     }
@@ -66,7 +61,6 @@ package object Prelude {
       * Boolean "not"
       */
     @inline
-    @NotNull
     def not(@NotNull b: Bool): Bool = {
         !requireNonNull(b)
     }
@@ -75,6 +69,21 @@ package object Prelude {
     val otherwise: Bool = True
 
     //data Maybe
+
+    @inline
+    implicit def eqMaybe[L, R](implicit eq: Eq[L, R]): Eq[Maybe[L], Maybe[R]] = Eq
+
+    @inline
+    implicit val eqNothing: Eq[Nothing.type, Nothing.type] = Eq
+
+    @inline
+    implicit def eqNothingJust[T](implicit eq: Eq[T, T]): Eq[Nothing.type, Just[T]] = Eq
+
+    @inline
+    implicit def eqJustNothing[T](implicit eq: Eq[T, T]): Eq[Just[T], Nothing.type] = Eq
+
+    @inline
+    implicit def eqJustMaybe[L, R](implicit eq: Eq[L, R]): Eq[Just[L], Maybe[R]] = Eq
 
     /**
       * The maybe function takes a default value, a function, and a Maybe value.
@@ -103,6 +112,23 @@ package object Prelude {
     }
 
     //data Either
+
+    @inline
+    implicit def eqEither[LL, LR, RL, RR]: Eq[Either[LL, LR], Either[RL, RR]] = Eq
+
+    @inline
+    implicit def eqLeft[T](implicit eq: Eq[T, T]): Eq[Left[T], Left[T]] = Eq
+
+    @inline
+    implicit def eqRight[T](implicit eq: Eq[T, T]): Eq[Right[T], Right[T]] = Eq
+
+    @inline
+    implicit def eqLeftRight[L, R](implicit eql: Eq[L, L],
+                                   eqr: Eq[R, R]): Eq[Left[L], Right[R]] = Eq
+
+    @inline
+    implicit def eqRightLeft[L, R](implicit eql: Eq[L, L],
+                                   eqr: Eq[R, R]): Eq[Right[R], Left[L]] = Eq
 
     @inline
     def either[A, B, C](@NotNull fl: A => C)

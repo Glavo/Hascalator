@@ -11,12 +11,12 @@ import Hascalator.Prelude._
 trait Base  {
 
     @inline
-    final def ===[A](other: A)(implicit eq: Eq[A, this.type]): Bool = {
+    final def ===[A](other: A)(implicit eq: Eq[this.type, A]): Bool = {
         if(this == other) True else False
     }
 
     @inline
-    final def /==[A](other: A)(implicit eq: Eq[A, this.type]) : Bool = {
+    final def /==[A](other: A)(implicit eq: Eq[this.type, A]) : Bool = {
         if(this == other) False else True
     }
 }
