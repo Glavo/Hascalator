@@ -12,6 +12,6 @@ libraryDependencies ++= Seq(
     "org.jetbrains" % "annotations" % "13.0"
 )
 
-
+initialCommands in console := "import Hascalator._, Hascalator.Prelude._"
 
 

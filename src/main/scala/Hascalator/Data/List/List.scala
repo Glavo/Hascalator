@@ -79,6 +79,8 @@ object List {
     @inline
     implicit def listBuilder[T](f: => List[T]): ConsWrapper[T] =
         new ConsWrapper(f)
+
+
 }
 
 final class Cons[+A](override val head: A,

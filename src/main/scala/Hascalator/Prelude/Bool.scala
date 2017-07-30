@@ -73,7 +73,7 @@ object Bool {
         }
 
         override def enumFromThen(e1: Bool)(e2: Bool): List[Bool] = (e1, e1) match {
-            case (False, False) => ???
+            case _ => ??? //TODO
         }
 
         override def toEnum(i: Int): Bool = (i : @switch) match {

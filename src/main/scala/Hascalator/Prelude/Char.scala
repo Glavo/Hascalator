@@ -72,4 +72,8 @@ object Char {
             else GT
         }
     }
+
+    implicit val eqChar: Eq[Char, Char] = Eq
 }
+
+
