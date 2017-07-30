@@ -8,5 +8,15 @@ import Hascalator.Prelude._
   * @author Glavo
   * @since 0.1.0
   */
-trait Base extends Any {
+trait Base  {
+
+    @inline
+    final def ===[A](other: A)(implicit eq: Eq[A, this.type]): Bool = {
+        if(this == other) True else False
+    }
+
+    @inline
+    final def /==[A](other: A)(implicit eq: Eq[A, this.type]) : Bool = {
+        if(this == other) False else True
+    }
 }

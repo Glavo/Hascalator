@@ -254,49 +254,49 @@ package object Prelude {
     //type class Enum
 
     @inline
-    implicit def toEnumImpl[E : Enum](e: E): Enum.Impl[E] =
+    implicit def toEnumImpl[E: Enum](e: E): Enum.Impl[E] =
         new Enum.Impl[E](e)
 
     @inline
-    def succ[E : Enum](e: E): E =
+    def succ[E: Enum](e: E): E =
         implicitly[Enum[E]].succ(e)
 
     @inline
-    def pred[E : Enum](e: E): E =
+    def pred[E: Enum](e: E): E =
         implicitly[Enum[E]].pred(e)
 
     @inline
-    def toEnum[E : Enum](i: Int): E =
+    def toEnum[E: Enum](i: Int): E =
         implicitly[Enum[E]].toEnum(i)
 
     @inline
-    def fromEnum[E : Enum](e: E): Int =
+    def fromEnum[E: Enum](e: E): Int =
         implicitly[Enum[E]].fromEnum(e)
 
     @inline
-    def enumFrom[E : Enum](e: E): List[E] =
+    def enumFrom[E: Enum](e: E): List[E] =
         implicitly[Enum[E]].enumFrom(e)
 
     @inline
-    def enumFromThen[E : Enum](e1: E)(e2: E): List[E] =
+    def enumFromThen[E: Enum](e1: E)(e2: E): List[E] =
         implicitly[Enum[E]].enumFromThen(e1)(e2)
 
     @inline
-    def enumFromTo[E : Enum](e1: E)(e2: E): List[E] =
+    def enumFromTo[E: Enum](e1: E)(e2: E): List[E] =
         implicitly[Enum[E]].enumFromTo(e1)(e2)
 
     @inline
-    def enumFromThenTo[E : Enum](e1: E)(e2: E)(e3: E): List[E] =
+    def enumFromThenTo[E: Enum](e1: E)(e2: E)(e3: E): List[E] =
         implicitly[Enum[E]].enumFromThenTo(e1)(e2)(e3)
 
     //type class Bounded
 
     @inline
-    def minBound[B : Bounded]: B =
+    def minBound[B: Bounded]: B =
         implicitly[Bounded[B]].minBound
 
     @inline
-    def maxBound[B : Bounded]: B =
+    def maxBound[B: Bounded]: B =
         implicitly[Bounded[B]].maxBound
 
     //Numbers
@@ -333,19 +333,19 @@ package object Prelude {
     /**
       * Unary negation.
       */
-    def negate[A : Num](a: A): A =
+    def negate[A: Num](a: A): A =
         implicitly[Num[A]].negate(a)
 
     /**
       * Absolute value.
       */
-    def abs[A : Num](a: A): A =
+    def abs[A: Num](a: A): A =
         implicitly[Num[A]].abs(a)
 
     /**
       * Sign of a number.
       */
-    def signum[A : Num](a: A): A =
+    def signum[A: Num](a: A): A =
         implicitly[Num[A]].signum(a)
 
     /**
@@ -353,7 +353,7 @@ package object Prelude {
       * of the function fromInteger to the appropriate value of type Integer,
       * so such literals have type A : Num.
       */
-    def fromInteger[A : Num](i: Integer): A =
+    def fromInteger[A: Num](i: Integer): A =
         implicitly[Num[A]].fromInteger(i)
 
     //List
@@ -361,4 +361,8 @@ package object Prelude {
     def cycle[A](l: List[A]): List[A] =
         l ++ cycle(l)
 
+
+    //type class Eq
+    @inline
+    implicit def toEqImpl[A](v: A): Eq.Impl[A] = new Eq.Impl(v)
 }

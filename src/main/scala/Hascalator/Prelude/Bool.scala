@@ -85,5 +85,7 @@ object Bool {
 
         override def enumFromThenTo(e1: Bool)(e2: Bool)(e3: Bool): List[Bool] = ???
     }
+
+    implicit val eqBool: Eq[Bool, Bool] = Eq
 }
 
