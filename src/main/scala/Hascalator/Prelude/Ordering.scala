@@ -11,3 +11,6 @@ import Hascalator.Base
 final class Ordering private[Prelude](override val toString: String,
                                       override val hashCode: Int)  extends Base
 
+object Ordering {
+    implicit val eqOrdering: Eq[Ordering, Ordering] = Eq
+}

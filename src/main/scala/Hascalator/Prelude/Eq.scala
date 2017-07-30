@@ -12,7 +12,7 @@ import Data.Int._
   * @since 0.1.0
   */
 @implicitNotFound("Values of types ${L} and ${R} cannot be compared with === or /==")
-trait Eq[-L <: Any, -R <: Any]
+sealed trait Eq[-L <: Any, -R <: Any]
 
 object Eq extends Eq[Any, Any] {
 

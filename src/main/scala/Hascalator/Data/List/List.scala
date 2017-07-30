@@ -2,6 +2,7 @@ package Hascalator.Data.List
 
 import Hascalator._
 import Data.Function._
+import Hascalator.Prelude.Eq
 
 import scala.annotation.unchecked.uncheckedStable
 import scala.annotation.varargs
@@ -80,7 +81,7 @@ object List {
     implicit def listBuilder[T](f: => List[T]): ConsWrapper[T] =
         new ConsWrapper(f)
 
-
+    implicit def eqList[L, R](implicit eq: Eq[L, R]): Eq[List[L], List[R]] = Eq
 }
 
 final class Cons[+A](override val head: A,

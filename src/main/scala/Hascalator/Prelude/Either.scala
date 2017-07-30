@@ -12,6 +12,10 @@ sealed abstract class Either[+L, +R] {
 
 }
 
+object Either {
+    def eqEither[LL, LR, RL, RR]: Eq[Either[LL, LR], Either[RL, RR]] = Eq
+}
+
 final case class Left[T](value: T) extends Either[T, ⊥]
 
 final case class Right[T](value: T) extends Either[⊥, T]
