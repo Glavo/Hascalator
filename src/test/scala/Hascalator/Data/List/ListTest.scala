@@ -8,7 +8,7 @@ import org.scalatest._
   * @author Glavo
   * @since 0.1.0
   */
-class ListSuite extends FunSuite {
+class ListTest extends FunSuite {
     test("equals") {
         assert(
             (1 :: 2 :: 3 :: Nil) ==

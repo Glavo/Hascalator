@@ -10,6 +10,6 @@ import org.scalatest._
   * @author Glavo
   * @since 0.1.0
   */
-class EqSuite extends FunSuite {
+class EqTest extends FunSuite {
 
 }

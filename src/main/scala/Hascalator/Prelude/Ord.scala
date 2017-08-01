@@ -1,6 +1,5 @@
 package Hascalator.Prelude
 
-import Hascalator.Data.Bool.Bool
 import Hascalator._
 
 import scala.annotation.implicitNotFound

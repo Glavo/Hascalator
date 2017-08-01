@@ -7,9 +7,8 @@ package Hascalator.Data
   * @since 0.1.0
   */
 package object Bool {
-
-    val True: Bool = new Bool("True", 1)
-    val False: Bool = new Bool("False", 0)
+    val True: Bool = Bool.True
+    val False: Bool = Bool.False
 
     /**
       * Boolean "and"

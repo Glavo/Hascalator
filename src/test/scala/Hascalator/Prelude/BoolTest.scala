@@ -1,5 +1,8 @@
 package Hascalator.Prelude
 
+import Hascalator._
+import Data.List._
+
 import org.scalatest._
 
 /**
@@ -8,7 +11,7 @@ import org.scalatest._
   * @author Glavo
   * @since 0.1.0
   */
-class BoolSpec extends FlatSpec {
+class BoolTest extends FlatSpec {
     "True && True" should "be True" in {
         assert((True && True) == True)
     }
@@ -40,4 +43,10 @@ class BoolSpec extends FlatSpec {
     "False || False" should "be False" in {
         assert((False || False) == False)
     }
+
+    "[False ..]" should "be [False, True]" in {
+        assert(enumFrom(False) == List(False, True, Nil))
+    }
+
+    "[True ..]"
 }

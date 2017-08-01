@@ -19,7 +19,7 @@ package object Prelude {
     def error(message: String = ""): ⊥ = throw new Exception(message)
 
     @inline
-    def basArg: ⊥ = throw new Exception("bad argument")
+    def badArg: ⊥ = throw new Exception("bad argument")
 
     //Basic data types
 

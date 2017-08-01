@@ -44,7 +44,7 @@ abstract sealed class List[+A] extends Base {
 
     @inline
     final def !::[B >: A](b: B): List[B] =
-        new Cons(b, this)
+        new Cons(b, this, true)
 
     @inline
     final def unary_! : List[A] = {
@@ -86,12 +86,20 @@ object List {
 }
 
 final class Cons[+A](override val head: A,
-                     tl: => List[A]) extends List[A] {
+                     tl: => List[A],
+                     defined: Boolean = false) extends List[A] {
 
     override def isEmpty = false
 
     @volatile private[this] var tlVal: List[A] = _
     @volatile private[this] var tlGen = tl _
+
+    {
+        if (defined) {
+            tlVal = tlGen()
+            tlGen = null
+        }
+    }
 
     def tailDefined: Boolean = tlGen eq null
 
@@ -131,7 +139,7 @@ object Nil extends List[⊥] {
     def tailDefined = false
 
     @inline
-    def ::[A](a: A): List[A] = new Cons[A](a, this)
+    def ::[A](a: A): List[A] = new Cons[A](a, this, true)
 
     override def equals(obj: scala.Any): Boolean =
         obj.asInstanceOf[AnyRef] eq this
