@@ -15,7 +15,11 @@ import Hascalator.Data.Ratio.Ratio
   */
 package object Prelude {
 
-    def error(message: String = "bad argument"): ⊥ = throw new Exception(message)
+    @inline
+    def error(message: String = ""): ⊥ = throw new Exception(message)
+
+    @inline
+    def basArg: ⊥ = throw new Exception("bad argument")
 
     //Basic data types
 
@@ -28,24 +32,22 @@ package object Prelude {
     def const[A, B](a: A)(b: B): A = a
 
     @inline
-    def flip[A, B, C](@NotNull f: A => B => C): B => A => C =
+    def flip[A, B, C]( f: A => B => C): B => A => C =
         b => a => f(a)(b)
 
     //data Bool
 
-    val True: Bool = new Bool("True", 1)
-    val False: Bool = new Bool("False", 0)
+    type Bool = Data.Bool.Bool
 
-    @inline
-    implicit def functionWapper[T1, R](@NotNull f: T1 => R): Prelude.Function[T1, R] = {
-        new Prelude.Function(requireNonNull(f))
-    }
+    val True: Bool = Data.Bool.True
+
+    val False: Bool = Data.Bool.False
 
     /**
       * Boolean "and"
       */
     @inline
-    def &&(@NotNull b1: Bool, @NotNull b2: Bool): Bool = {
+    def &&( b1: Bool,  b2: Bool): Bool = {
         requireNonNull(b1) && b2
     }
 
@@ -53,7 +55,7 @@ package object Prelude {
       * Boolean "or"
       */
     @inline
-    def ||(@NotNull b1: Bool, @NotNull b2: Bool): Bool = {
+    def ||( b1: Bool,  b2: Bool): Bool = {
         requireNonNull(b1) || b2
     }
 
@@ -61,11 +63,11 @@ package object Prelude {
       * Boolean "not"
       */
     @inline
-    def not(@NotNull b: Bool): Bool = {
+    def not( b: Bool): Bool = {
         !requireNonNull(b)
     }
 
-    @NotNull
+    
     val otherwise: Bool = True
 
     //data Maybe
@@ -95,15 +97,15 @@ package object Prelude {
       *
       * {{{
       *     scala> maybe(False)(odd)(Just(3))
-      *     res1: Hascalator.Prelude.Bool = False
+      *     res1: Hascalator.Data.Bool.Bool = False
       *
       *     scala> maybe(False)(odd)(Nothing)
-      *     res2: Hascalator.Prelude.Bool = False
+      *     res2: Hascalator.Data.Bool.Bool = False
       * }}}
       *
       */
     @inline
-    def maybe[A, B](b: B)(@NotNull f: A => B)(@NotNull m: Maybe[A]): B = {
+    def maybe[A, B](b: B)( f: A => B)( m: Maybe[A]): B = {
         requireNonNull(f)
         requireNonNull(m) match {
             case Just(value) => f(value)
@@ -131,9 +133,9 @@ package object Prelude {
                                    eqr: Eq[R, R]): Eq[Right[R], Left[L]] = Eq
 
     @inline
-    def either[A, B, C](@NotNull fl: A => C)
-                       (@NotNull fr: B => C)
-                       (@NotNull e: Either[A, B]): C = {
+    def either[A, B, C]( fl: A => C)
+                       ( fr: B => C)
+                       ( e: Either[A, B]): C = {
         requireNonNull(fl)
         requireNonNull(fr)
 
@@ -145,29 +147,27 @@ package object Prelude {
 
     //data Ordering
 
-    @NotNull
+    
     val LT: Ordering = new Ordering("LT", -1)
 
-    @NotNull
+    
     val EQ: Ordering = new Ordering("EQ", 0)
 
-    @NotNull
+    
     val GT: Ordering = new Ordering("GT", 1)
 
     //data Char
 
     @inline
-    @NotNull
     implicit def charToCh(c: scala.Char): Char = new Char(c)
 
 
     @inline
-    implicit def chToChar(@NotNull ch: Char): scala.Char =
+    implicit def chToChar( ch: Char): scala.Char =
         requireNonNull(ch).self
 
     @inline
-    @NotNull
-    implicit def chToCharacter(@NotNull ch: Char): Character =
+    implicit def chToCharacter( ch: Char): Character =
         requireNonNull(ch).self
 
     //type String
@@ -180,21 +180,20 @@ package object Prelude {
       * Extract the first component of a pair.
       */
     @inline
-    def fst[A, B](@NotNull t: (A, B)): A =
+    def fst[A, B]( t: (A, B)): A =
     requireNonNull(t)._1
 
     /**
       * Extract the second component of a pair.
       */
     @inline
-    def snd[A, B](@NotNull t: (A, B)): B =
+    def snd[A, B]( t: (A, B)): B =
     requireNonNull(t)._2
 
     /**
       * curry converts an uncurried function to a curried function.
       */
     @inline
-    @NotNull
     def curry[A, B, C](f: ((A, B)) => C): A => B => C = {
         requireNonNull(f)
         a => b => f((a, b))
@@ -204,8 +203,7 @@ package object Prelude {
       * uncurry converts a curried function to a function on pairs.
       */
     @inline
-    @NotNull
-    def uncurry[A, B, C](@NotNull f: A => B => C): ((A, B)) => C = {
+    def uncurry[A, B, C]( f: A => B => C): ((A, B)) => C = {
         requireNonNull(f)
 
         pair => f(pair._1)(pair._2)
@@ -213,21 +211,23 @@ package object Prelude {
 
     //Basic type classes
 
+    //type class Eq
+    @inline
+    implicit def toEqImpl[A](v: A): Eq.Impl[A] = new Eq.Impl(v)
+
+
     //type class Ord
 
     @inline
-    @NotNull
     implicit def toOrdImpl[T: Ord](t: T): Ord.Impl[T] =
         new Ord.Impl[T](t)
 
     @inline
-    @NotNull
     def compare[T: Ord](t1: T)(t2: T): Ordering =
         implicitly[Ord[T]].compare(t1)(t2)
 
     @inline
-    @NotNull
-    final def <[T: Ord](@NotNull t1: T)(@NotNull t2: T): Bool =
+    final def <[T: Ord]( t1: T)( t2: T): Bool =
         compare(t1)(t2) match {
             case LT => True
             case EQ => False
@@ -235,8 +235,7 @@ package object Prelude {
         }
 
     @inline
-    @NotNull
-    final def <=[T: Ord](@NotNull t1: T)(@NotNull t2: T): Bool =
+    final def <=[T: Ord]( t1: T)( t2: T): Bool =
         compare(t1)(t2) match {
             case LT => True
             case EQ => True
@@ -244,8 +243,7 @@ package object Prelude {
         }
 
     @inline
-    @NotNull
-    final def >[T: Ord](@NotNull t1: T)(@NotNull t2: T): Bool =
+    final def >[T: Ord]( t1: T)( t2: T): Bool =
         compare(t1)(t2) match {
             case LT => False
             case EQ => False
@@ -253,8 +251,7 @@ package object Prelude {
         }
 
     @inline
-    @NotNull
-    final def >=[T: Ord](@NotNull t1: T)(@NotNull t2: T): Bool =
+    final def >=[T: Ord]( t1: T)( t2: T): Bool =
         compare(t1)(t2) match {
             case LT => False
             case EQ => True
@@ -262,16 +259,14 @@ package object Prelude {
         }
 
     @inline
-    @NotNull
-    def max[T: Ord](@NotNull t1: T)(@NotNull t2: T): T =
+    def max[T: Ord]( t1: T)( t2: T): T =
         compare(t1)(t2) match {
             case LT => t2
             case _ => t1
         }
 
     @inline
-    @NotNull
-    def min[T: Ord](@NotNull t1: T)(@NotNull t2: T): T =
+    def min[T: Ord]( t1: T)( t2: T): T =
         compare(t1)(t2) match {
             case LT => t1
             case _ => t2
@@ -388,7 +383,9 @@ package object Prelude {
         l ++ cycle(l)
 
 
-    //type class Eq
+    //Functions
     @inline
-    implicit def toEqImpl[A](v: A): Eq.Impl[A] = new Eq.Impl(v)
+    implicit def functionWapper[T1, R]( f: T1 => R): Prelude.Function[T1, R] = {
+        new Prelude.Function(requireNonNull(f))
+    }
 }

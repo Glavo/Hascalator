@@ -1,7 +1,8 @@
-package Hascalator.Prelude
+package Hascalator.Data.Bool
 
+import Hascalator.Data.List._
+import Hascalator.Prelude._
 import Hascalator._
-import Data.List._
 import org.jetbrains.annotations.NotNull
 
 import scala.annotation.switch
@@ -19,8 +20,7 @@ final class Bool private[Prelude](override val toString: String,
       * Boolean "and"
       */
     @inline
-    @NotNull
-    def &&(@NotNull other: Bool): Bool = {
+    def &&(other: Bool): Bool = {
         requireNonNull(other)
 
         if (this == True && other == True) True
@@ -31,7 +31,6 @@ final class Bool private[Prelude](override val toString: String,
       * Boolean "or"
       */
     @inline
-    @NotNull
     def ||(other: Bool): Bool = {
         requireNonNull(other)
         if (this == True || other == True) True
@@ -42,7 +41,6 @@ final class Bool private[Prelude](override val toString: String,
       * Boolean "not"
       */
     @inline
-    @NotNull
     def unary_! : Bool = {
         if (this == True) False
         else True
@@ -50,15 +48,15 @@ final class Bool private[Prelude](override val toString: String,
 }
 
 object Bool {
-    implicit val InstanceEnum: Enum[Bool] = new Enum[Bool] {
+    implicit object InstanceEnum extends Enum[Bool] {
 
-        override def succ(t: Bool): Bool =  t match {
+        override def succ(t: Bool): Bool = t match {
             case False => True
-            case True => error()
+            case True => basArg
         }
 
         override def pred(t: Bool): Bool = t match {
-            case False => error()
+            case False => basArg
             case True => False
         }
 
@@ -73,17 +71,35 @@ object Bool {
         }
 
         override def enumFromThen(e1: Bool)(e2: Bool): List[Bool] = (e1, e1) match {
-            case _ => ??? //TODO
+            case (False, False) => cycle(False :: Nil)
+            case (False, True) => False !:: True :: Nil
+            case (True, False) => True !:: False :: Nil
+            case (True, True) => cycle(True :: Nil)
         }
 
-        override def toEnum(i: Int): Bool = (i : @switch) match {
+        override def toEnum(i: Int): Bool = (i: @switch) match {
             case 0 => False
             case 1 => True
         }
 
-        override def enumFromTo(e1: Bool)(e2: Bool): List[Bool] = ???
+        override def enumFromTo(e1: Bool)(e2: Bool): List[Bool] = (e1, e2) match {
+            case (False, False) => False :: Nil
+            case (False, True) => False !:: True :: Nil
+            case (True, False) => Nil
+            case (True, True) => True :: Nil
+        }
 
-        override def enumFromThenTo(e1: Bool)(e2: Bool)(e3: Bool): List[Bool] = ???
+        override def enumFromThenTo(e1: Bool)(e2: Bool)(e3: Bool): List[Bool] = (e1, e2, e3) match {
+            case (False, False, False) => cycle(False :: Nil)
+            case (False, False, True) => cycle(False :: Nil)
+            case (False, True, False) => False :: Nil
+            case (False, True, True) => False !:: True :: Nil
+            case (True, False, False) => True !:: False :: Nil
+            case (True, False, True) => True :: Nil
+            case (True, True, False) => Nil
+            case (True, True, True) => cycle(True :: Nil)
+
+        }
     }
 
     implicit val eqBool: Eq[Bool, Bool] = Eq

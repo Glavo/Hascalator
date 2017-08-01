@@ -1,5 +1,6 @@
 package Hascalator.Prelude
 
+import Hascalator.Data.Bool.Bool
 import Hascalator._
 
 /**
@@ -28,7 +29,7 @@ abstract sealed class Maybe[+T] protected extends Base {
 object Maybe {
 }
 
-case class Just[+T](@NotNull value: T) extends Maybe[T]
+case class Just[+T](value: T) extends Maybe[T]
 
 object Just {
 }

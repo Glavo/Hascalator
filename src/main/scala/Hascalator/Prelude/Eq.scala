@@ -3,7 +3,8 @@ package Hascalator.Prelude
 import Hascalator._
 
 import scala.annotation.implicitNotFound
-import Data.Int._ 
+import Data.Int._
+import Hascalator.Data.Bool.Bool
 
 /**
   * Created by Glavo on 17-7-30.

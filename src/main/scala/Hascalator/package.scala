@@ -1,6 +1,7 @@
+import Hascalator.Data.Bool.Bool
 import Hascalator.Data.Int.Int
 import Hascalator.Data.List
-import Hascalator.Data.List.{List, ConsWrapper}
+import Hascalator.Data.List.{ConsWrapper, List}
 import Hascalator.Prelude
 import Hascalator.Prelude.{Bool, False, True}
 

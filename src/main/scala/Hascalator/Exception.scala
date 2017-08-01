@@ -6,4 +6,13 @@ package Hascalator
   * @author Glavo
   * @since 0.1.0
   */
-class Exception(message: String = "bad argument") extends RuntimeException(message)
+class Exception(message: String) extends RuntimeException(message)
+
+object Exception {
+    @inline
+    def error(message: String = ""): ⊥ =
+        throw new Exception(message)
+
+    @inline
+    def badArg : ⊥ = throw new Exception("bad argument")
+}

@@ -65,7 +65,8 @@ abstract sealed class List[+A] extends Base {
 
 object List {
 
-    def apply[A](@varargs args: A*): List[A] = {
+    @inline
+    def apply[A](args: A*): List[A] = {
         var list: List[A] = Nil
         val it = args.reverseIterator
 
@@ -117,6 +118,7 @@ final class Cons[+A](override val head: A,
 }
 
 object Nil extends List[⊥] {
+
     @inline
     def apply[A]: List[A] = this
 

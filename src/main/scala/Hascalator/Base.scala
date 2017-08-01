@@ -1,5 +1,6 @@
 package Hascalator
 
+import Hascalator.Data.Bool.Bool
 import Hascalator.Prelude._
 
 /**
