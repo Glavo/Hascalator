@@ -45,12 +45,37 @@ abstract class Enum[A] {
 
 object Enum {
 
-  class Impl[T: Enum](val self: T) {
-    def succ = implicitly[Enum[T]].succ(self)
+  trait Impl {
+    implicit class RichEnum[T: Enum](val self: T) {
+      def succ: T = implicitly[Enum[T]].succ(self)
 
-    def pred = implicitly[Enum[T]].pred(self)
+      def pred: T = implicitly[Enum[T]].pred(self)
 
-    def fromEnum = implicitly[Enum[T]].fromEnum(self)
+      def fromEnum: Int = implicitly[Enum[T]].fromEnum(self)
+    }
+
+    def succ[E: Enum](e: E): E =
+      implicitly[Enum[E]].succ(e)
+
+    def pred[E: Enum](e: E): E =
+      implicitly[Enum[E]].pred(e)
+
+    def toEnum[E: Enum](i: Int): E =
+      implicitly[Enum[E]].toEnum(i)
+
+    def fromEnum[E: Enum](e: E): Int =
+      implicitly[Enum[E]].fromEnum(e)
+
+    def enumFrom[E: Enum](e: E): List[E] =
+      implicitly[Enum[E]].enumFrom(e)
+
+    def enumFromThen[E: Enum](e1: E)(e2: E): List[E] =
+      implicitly[Enum[E]].enumFromThen(e1)(e2)
+
+    def enumFromTo[E: Enum](e1: E)(e2: E): List[E] =
+      implicitly[Enum[E]].enumFromTo(e1)(e2)
+
+    def enumFromThenTo[E: Enum](e1: E)(e2: E)(e3: E): List[E] =
+      implicitly[Enum[E]].enumFromThenTo(e1)(e2)(e3)
   }
-
 }

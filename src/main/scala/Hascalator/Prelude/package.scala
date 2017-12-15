@@ -13,18 +13,19 @@ import Hascalator.Data.Ratio.Ratio
   * @author Glavo
   * @since 0.1.0
   */
-package object Prelude {
-
+package object Prelude
+  extends Enum.Impl
+    with Num.Impl
+    with Bounded.Impl
+    with Ord.Impl {
 
   def error(message: String = ""): ⊥ = throw new Exception(message)
-
 
   def badArg: ⊥ = throw new Exception("bad argument")
 
   //Basic data types
 
   //Function
-
 
   def id[A](it: A): A = it
 
@@ -126,14 +127,10 @@ package object Prelude {
 
   //data Char
 
-
   implicit def charToCh(c: scala.Char): Char = new Char(c)
-
-
 
   implicit def chToChar(ch: Char): scala.Char =
     requireNonNull(ch).self
-
 
   implicit def chToCharacter(ch: Char): Character =
     requireNonNull(ch).self
@@ -173,116 +170,11 @@ package object Prelude {
 
   def uncurry[A, B, C](f: A => B => C): ((A, B)) => C = {
     requireNonNull(f)
-
     pair => f(pair._1)(pair._2)
   }
 
   //Basic type classes
 
-
-  //type class Ord
-
-
-  implicit def toOrdImpl[T: Ord](t: T): Ord.Impl[T] =
-    new Ord.Impl[T](t)
-
-
-  def compare[T: Ord](t1: T)(t2: T): Ordering =
-    implicitly[Ord[T]].compare(t1)(t2)
-
-
-  final def <[T: Ord](t1: T)(t2: T): Bool =
-    compare(t1)(t2) match {
-      case LT => True
-      case EQ => False
-      case GT => False
-    }
-
-
-  final def <=[T: Ord](t1: T)(t2: T): Bool =
-    compare(t1)(t2) match {
-      case LT => True
-      case EQ => True
-      case GT => False
-    }
-
-
-  final def >[T: Ord](t1: T)(t2: T): Bool =
-    compare(t1)(t2) match {
-      case LT => False
-      case EQ => False
-      case GT => True
-    }
-
-
-  final def >=[T: Ord](t1: T)(t2: T): Bool =
-    compare(t1)(t2) match {
-      case LT => False
-      case EQ => True
-      case GT => True
-    }
-
-
-  def max[T: Ord](t1: T)(t2: T): T =
-    compare(t1)(t2) match {
-      case LT => t2
-      case _ => t1
-    }
-
-
-  def min[T: Ord](t1: T)(t2: T): T =
-    compare(t1)(t2) match {
-      case LT => t1
-      case _ => t2
-    }
-
-  //type class Enum
-
-
-  implicit def toEnumImpl[E: Enum](e: E): Enum.Impl[E] =
-    new Enum.Impl[E](e)
-
-
-  def succ[E: Enum](e: E): E =
-    implicitly[Enum[E]].succ(e)
-
-
-  def pred[E: Enum](e: E): E =
-    implicitly[Enum[E]].pred(e)
-
-
-  def toEnum[E: Enum](i: Int): E =
-    implicitly[Enum[E]].toEnum(i)
-
-
-  def fromEnum[E: Enum](e: E): Int =
-    implicitly[Enum[E]].fromEnum(e)
-
-
-  def enumFrom[E: Enum](e: E): List[E] =
-    implicitly[Enum[E]].enumFrom(e)
-
-
-  def enumFromThen[E: Enum](e1: E)(e2: E): List[E] =
-    implicitly[Enum[E]].enumFromThen(e1)(e2)
-
-
-  def enumFromTo[E: Enum](e1: E)(e2: E): List[E] =
-    implicitly[Enum[E]].enumFromTo(e1)(e2)
-
-
-  def enumFromThenTo[E: Enum](e1: E)(e2: E)(e3: E): List[E] =
-    implicitly[Enum[E]].enumFromThenTo(e1)(e2)(e3)
-
-  //type class Bounded
-
-
-  def minBound[B: Bounded]: B =
-    implicitly[Bounded[B]].minBound
-
-
-  def maxBound[B: Bounded]: B =
-    implicitly[Bounded[B]].maxBound
 
   //Numbers
 
@@ -311,35 +203,6 @@ package object Prelude {
   type Rational = Ratio[Integer]
 
 
-  //Numeric type classes
-
-  //type class Num
-
-  /**
-    * Unary negation.
-    */
-  def negate[A: Num](a: A): A =
-    implicitly[Num[A]].negate(a)
-
-  /**
-    * Absolute value.
-    */
-  def abs[A: Num](a: A): A =
-    implicitly[Num[A]].abs(a)
-
-  /**
-    * Sign of a number.
-    */
-  def signum[A: Num](a: A): A =
-    implicitly[Num[A]].signum(a)
-
-  /**
-    * Conversion from an Integer. An integer literal represents the application
-    * of the function fromInteger to the appropriate value of type Integer,
-    * so such literals have type A : Num.
-    */
-  def fromInteger[A: Num](i: Integer): A =
-    implicitly[Num[A]].fromInteger(i)
 
   //List
 

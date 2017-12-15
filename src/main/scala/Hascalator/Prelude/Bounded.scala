@@ -17,8 +17,18 @@ import scala.annotation.implicitNotFound
   */
 @implicitNotFound("No instance for Bounded[${B}]")
 abstract class Bounded[B] {
-
   def minBound: B
 
   def maxBound: B
+}
+
+object Bounded {
+  trait Impl {
+    def minBound[B: Bounded]: B =
+      implicitly[Bounded[B]].minBound
+
+
+    def maxBound[B: Bounded]: B =
+      implicitly[Bounded[B]].maxBound
+  }
 }

@@ -17,7 +17,6 @@ sealed abstract class Bool {
   /**
     * Boolean "and"
     */
-
   def &&(other: Bool): Bool = {
     requireNonNull(other)
 
@@ -28,7 +27,6 @@ sealed abstract class Bool {
   /**
     * Boolean "or"
     */
-
   def ||(other: Bool): Bool = {
     requireNonNull(other)
     if (this == True || other == True) True
@@ -38,7 +36,6 @@ sealed abstract class Bool {
   /**
     * Boolean "not"
     */
-
   def unary_! : Bool = {
     if (this == True) False
     else True
@@ -81,7 +78,6 @@ object Bool {
       case True => listTrue
     }
 
-
     override def toEnum(i: Int): Bool = (i: @switch) match {
       case 0 => False
       case 1 => True
@@ -116,6 +112,5 @@ object Bool {
       case (True, True, True) => cycle(True :: Nil)
     }
   }
-
 }
 
