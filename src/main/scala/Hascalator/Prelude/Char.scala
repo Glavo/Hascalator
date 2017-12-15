@@ -18,7 +18,6 @@ import Hascalator.{Data, _}
   * @since 0.1.0
   */
 final class Char(@inline
-                 @NotNull
                  val self: Character)  {
 
     {
@@ -26,7 +25,6 @@ final class Char(@inline
     }
 
     @inline
-    @NotNull
     override def toString = self.toString
 
     @inline
@@ -46,22 +44,19 @@ final class Char(@inline
 
 object Char {
     @inline
-    @NotNull
     def apply(char: scala.Char): Char = new Char(char)
 
     @inline
-    @NotNull
-    def apply(@NotNull character: Character): Char =
+    def apply( character: Character): Char =
         new Char(requireNonNull(character))
 
     @inline
-    @NotNull
     def unapply(arg: Char): Option[Character] =
         if (arg != null) Some(arg.self)
         else None
 
     implicit val InstanceOrd: Ord[Char] = new Ord[Char] {
-        override def compare(@NotNull t1: Char)(@NotNull t2: Char): Ordering = {
+        override def compare( t1: Char)( t2: Char): Ordering = {
             requireNonNull(t1)
             requireNonNull(t2)
 

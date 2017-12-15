@@ -10,8 +10,6 @@ import scala.language.implicitConversions
   */
 package object Hascalator {
 
-    type NotNull = org.jetbrains.annotations.NotNull
-
     type ⊥ = scala.Nothing
 
     type `_|_` = scala.Nothing
@@ -24,7 +22,6 @@ package object Hascalator {
       * and constructors, as demonstrated below:
       */
     @inline
-    @NotNull
     def requireNonNull[T](obj: T): T = {
         if (obj == null)
             throw new NullPointerException
@@ -32,7 +29,6 @@ package object Hascalator {
     }
 
     @inline
-    @NotNull
     implicit def booleanToBool(b: Boolean): Bool = {
         if (b) True
         else False
@@ -40,7 +36,7 @@ package object Hascalator {
 
 
     @inline
-    implicit def boolToBoolean(@NotNull b: Bool): Boolean = {
+    implicit def boolToBoolean( b: Bool): Boolean = {
         requireNonNull(b)
         if (b == True) true
         else false
