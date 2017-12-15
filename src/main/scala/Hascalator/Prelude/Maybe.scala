@@ -16,7 +16,7 @@ import Hascalator._
   * @author Glavo
   * @since 0.1.0
   */
-abstract sealed class Maybe[+T] protected extends Base {
+abstract sealed class Maybe[+T] protected  {
 
     @inline
     def isEmpty: Bool =

@@ -19,7 +19,7 @@ import Hascalator.{Data, _}
   */
 final class Char(@inline
                  @NotNull
-                 val self: Character) extends Base {
+                 val self: Character)  {
 
     {
         requireNonNull(self)

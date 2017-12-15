@@ -14,7 +14,7 @@ import scala.language.implicitConversions
   * @author Glavo
   * @since 0.1.0
   */
-abstract sealed class List[+A] extends Base {
+abstract sealed class List[+A] {
 
     /**
       * Indicates whether or not the `List` is empty.
