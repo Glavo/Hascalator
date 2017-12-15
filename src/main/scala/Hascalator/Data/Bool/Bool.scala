@@ -116,7 +116,5 @@ object Bool {
             case (True, True, True) => cycle(True :: Nil)
         }
     }
-
-    implicit val eqBool: Eq[Bool, Bool] = Eq
 }
 

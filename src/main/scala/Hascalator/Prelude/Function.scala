@@ -6,11 +6,11 @@ package Hascalator.Prelude
   * @author Glavo
   * @since 0.1.0
   */
-final class Function[-T1, +R]( val self: T1 => R) extends AnyVal {
+final class Function[-T1, +R](val self: T1 => R) extends AnyVal {
 
-    @inline
-    def $(t: T1): R = self(t)
+  @inline
+  def $(t: T1): R = self(t)
 
-    @inline
-    def `.`[T]( other: T => T1): T => R = it => self(other(it))
+  @inline
+  def `.`[T](other: T => T1): T => R = it => self(other(it))
 }
