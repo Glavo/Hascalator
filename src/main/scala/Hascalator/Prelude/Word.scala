@@ -8,6 +8,6 @@ package Hascalator.Prelude
   */
 final class Word(val value: Int) extends AnyVal {
 
-    override def toString: String = value.toString
+  override def toString: String = value.toString
 
 }

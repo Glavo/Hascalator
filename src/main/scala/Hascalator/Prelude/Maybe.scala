@@ -16,12 +16,12 @@ import Hascalator._
   * @author Glavo
   * @since 0.1.0
   */
-abstract sealed class Maybe[+T] protected  {
+abstract sealed class Maybe[+T] protected {
 
-    @inline
-    def isEmpty: Bool =
-        if (this == Nothing) True
-        else False
+  @inline
+  def isEmpty: Bool =
+    if (this == Nothing) True
+    else False
 
 }
 

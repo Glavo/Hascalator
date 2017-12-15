@@ -10,38 +10,38 @@ import scala.language.implicitConversions
   */
 package object Hascalator {
 
-    type ⊥ = scala.Nothing
+  type ⊥ = scala.Nothing
 
-    type `_|_` = scala.Nothing
+  type `_|_` = scala.Nothing
 
-    type Int = Data.Int.Int
+  type Int = Data.Int.Int
 
-    /**
-      * Checks that the specified object reference is not `null`. This
-      * method is designed primarily for doing parameter validation in methods
-      * and constructors, as demonstrated below:
-      */
-    @inline
-    def requireNonNull[T](obj: T): T = {
-        if (obj == null)
-            throw new NullPointerException
-        else obj
-    }
+  /**
+    * Checks that the specified object reference is not `null`. This
+    * method is designed primarily for doing parameter validation in methods
+    * and constructors, as demonstrated below:
+    */
+  @inline
+  def requireNonNull[T](obj: T): T = {
+    if (obj == null)
+      throw new NullPointerException
+    else obj
+  }
 
-    @inline
-    implicit def booleanToBool(b: Boolean): Bool = {
-        if (b) True
-        else False
-    }
+  @inline
+  implicit def booleanToBool(b: Boolean): Bool = {
+    if (b) True
+    else False
+  }
 
 
-    @inline
-    implicit def boolToBoolean( b: Bool): Boolean = {
-        requireNonNull(b)
-        if (b == True) true
-        else false
-    }
+  @inline
+  implicit def boolToBoolean(b: Bool): Boolean = {
+    requireNonNull(b)
+    if (b == True) true
+    else false
+  }
 
-    @inline
-    implicit def byLazy[A](f: => A): Lazy[A] = new Lazy[A](() => f)
+  @inline
+  implicit def byLazy[A](f: => A): Lazy[A] = new Lazy[A](() => f)
 }

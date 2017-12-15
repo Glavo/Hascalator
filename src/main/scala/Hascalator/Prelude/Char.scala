@@ -18,55 +18,55 @@ import Hascalator.{Data, _}
   * @since 0.1.0
   */
 final class Char(@inline
-                 val self: Character)  {
+                 val self: Character) {
 
-    {
-        requireNonNull(self)
+  {
+    requireNonNull(self)
+  }
+
+  @inline
+  override def toString = self.toString
+
+  @inline
+  override def hashCode(): scala.Int = self.hashCode()
+
+  @inline
+  override def equals(obj: scala.Any): Boolean = {
+    if (requireNonNull(self).getClass != getClass) false
+    else {
+      val ch = obj.asInstanceOf[Char]
+      ch.self == self
     }
-
-    @inline
-    override def toString = self.toString
-
-    @inline
-    override def hashCode(): scala.Int = self.hashCode()
-
-    @inline
-    override def equals(obj: scala.Any): Boolean = {
-        if (requireNonNull(self).getClass != getClass) false
-        else {
-            val ch = obj.asInstanceOf[Char]
-            ch.self == self
-        }
-    }
+  }
 
 
 }
 
 object Char {
-    @inline
-    def apply(char: scala.Char): Char = new Char(char)
+  @inline
+  def apply(char: scala.Char): Char = new Char(char)
 
-    @inline
-    def apply( character: Character): Char =
-        new Char(requireNonNull(character))
+  @inline
+  def apply(character: Character): Char =
+    new Char(requireNonNull(character))
 
-    @inline
-    def unapply(arg: Char): Option[Character] =
-        if (arg != null) Some(arg.self)
-        else None
+  @inline
+  def unapply(arg: Char): Option[Character] =
+    if (arg != null) Some(arg.self)
+    else None
 
-    implicit val InstanceOrd: Ord[Char] = new Ord[Char] {
-        override def compare( t1: Char)( t2: Char): Ordering = {
-            requireNonNull(t1)
-            requireNonNull(t2)
+  implicit val InstanceOrd: Ord[Char] = new Ord[Char] {
+    override def compare(t1: Char)(t2: Char): Ordering = {
+      requireNonNull(t1)
+      requireNonNull(t2)
 
-            val i = t1.self.compareTo(t2.self)
+      val i = t1.self.compareTo(t2.self)
 
-            if (i < 0) LT
-            else if (i == 0) EQ
-            else GT
-        }
+      if (i < 0) LT
+      else if (i == 0) EQ
+      else GT
     }
+  }
 }
 
 

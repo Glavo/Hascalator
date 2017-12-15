@@ -9,5 +9,5 @@ import Hascalator.Lazy
   * @since 0.1.0
   */
 class ConsWrapper[A](tl: => List[A]) {
-    def ::[B >: A](hd: B): List[B] = new Cons(hd, tl)
+  def ::[B >: A](hd: B): List[B] = new Cons(hd, tl)
 }

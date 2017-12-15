@@ -3,6 +3,7 @@ package Hascalator.Data.Ratio
 import Hascalator._
 
 import Prelude._
+
 /**
   * Created by Glavo on 17-7-27.
   *

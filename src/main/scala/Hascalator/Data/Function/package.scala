@@ -10,9 +10,8 @@ import scala.language.implicitConversions
   */
 package object Function {
 
-    @inline
-    implicit def wrapper[T, R](f: T => R): Function[T, R] = new Function(f)
-
+  @inline
+  implicit def wrapper[T, R](f: T => R): Function[T, R] = new Function(f)
 
 
 }

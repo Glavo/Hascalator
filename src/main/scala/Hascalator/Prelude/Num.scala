@@ -11,39 +11,41 @@ import scala.annotation.implicitNotFound
 @implicitNotFound("No instance for Num[${A}]")
 abstract class Num[A] {
 
-    /**
-      * Unary negation.
-      */
-    def negate(a: A): A
+  /**
+    * Unary negation.
+    */
+  def negate(a: A): A
 
-    /**
-      * Absolute value.
-      */
-    def abs(a: A): A
+  /**
+    * Absolute value.
+    */
+  def abs(a: A): A
 
-    /**
-      * Sign of a number.
-      */
-    def signum(a: A): A
+  /**
+    * Sign of a number.
+    */
+  def signum(a: A): A
 
-    /**
-      * Conversion from an Integer. An integer literal represents the application
-      * of the function fromInteger to the appropriate value of type Integer,
-      * so such literals have type A : Num.
-      */
-    def fromInteger(i: Integer): A
+  /**
+    * Conversion from an Integer. An integer literal represents the application
+    * of the function fromInteger to the appropriate value of type Integer,
+    * so such literals have type A : Num.
+    */
+  def fromInteger(i: Integer): A
 }
 
 object Num {
-    final class Impl[A : Num](@inline val self: A){
 
-        @inline
-        def negate: A = implicitly[Num[A]].negate(self)
+  final class Impl[A: Num](@inline val self: A) {
 
-        @inline
-        def abs: A = implicitly[Num[A]].abs(self)
+    @inline
+    def negate: A = implicitly[Num[A]].negate(self)
 
-        @inline
-        def signum: A = implicitly[Num[A]].signum(self)
-    }
+    @inline
+    def abs: A = implicitly[Num[A]].abs(self)
+
+    @inline
+    def signum: A = implicitly[Num[A]].signum(self)
+  }
+
 }

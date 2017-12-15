@@ -10,14 +10,16 @@ import scala.annotation.implicitNotFound
   */
 @implicitNotFound("No instance for Real[${A}]")
 abstract class Real[A](implicit num: Num[A], ord: Ord[A]) {
-    /**
-      * the rational equivalent of its real argument with full precision
-      */
-    def toRational(a: A): Rational
+  /**
+    * the rational equivalent of its real argument with full precision
+    */
+  def toRational(a: A): Rational
 }
 
 object Real {
-    class Impl[A : Real](val self: A) {
-        def toRational: Rational = implicitly[Real[A]].toRational(self)
-    }
+
+  class Impl[A: Real](val self: A) {
+    def toRational: Rational = implicitly[Real[A]].toRational(self)
+  }
+
 }
