@@ -8,9 +8,9 @@ package Hascalator.Prelude
   */
 final class Function[-T1, +R](val self: T1 => R) extends AnyVal {
 
-  @inline
+
   def $(t: T1): R = self(t)
 
-  @inline
+
   def `.`[T](other: T => T1): T => R = it => self(other(it))
 }

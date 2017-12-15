@@ -13,7 +13,7 @@ package object Bool {
   /**
     * Boolean "and"
     */
-  @inline
+
   def &&(b1: Bool, b2: Bool): Bool = {
     b1 && b2
   }
@@ -21,7 +21,7 @@ package object Bool {
   /**
     * Boolean "or"
     */
-  @inline
+
   def ||(b1: Bool, b2: Bool): Bool = {
     b1 || b2
   }
@@ -29,7 +29,7 @@ package object Bool {
   /**
     * Boolean "not"
     */
-  @inline
+
   def not(b: Bool): Bool = {
     !b
   }

@@ -18,7 +18,6 @@ import Hascalator._
   */
 abstract sealed class Maybe[+T] protected {
 
-  @inline
   def isEmpty: Bool =
     if (this == Nothing) True
     else False

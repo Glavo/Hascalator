@@ -36,15 +36,15 @@ abstract class Num[A] {
 
 object Num {
 
-  final class Impl[A: Num](@inline val self: A) {
+  final class Impl[A: Num]( val self: A) {
 
-    @inline
+
     def negate: A = implicitly[Num[A]].negate(self)
 
-    @inline
+
     def abs: A = implicitly[Num[A]].abs(self)
 
-    @inline
+
     def signum: A = implicitly[Num[A]].signum(self)
   }
 

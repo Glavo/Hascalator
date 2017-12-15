@@ -45,7 +45,7 @@ abstract class Enum[A] {
 
 object Enum {
 
-  class Impl[T: Enum](@inline val self: T) {
+  class Impl[T: Enum](val self: T) {
     def succ = implicitly[Enum[T]].succ(self)
 
     def pred = implicitly[Enum[T]].pred(self)

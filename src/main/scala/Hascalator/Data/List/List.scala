@@ -31,17 +31,17 @@ abstract sealed class List[+A] {
 
   protected def tailDefined: Boolean
 
-  @inline
+
   final def ++[B >: A](other: => List[B]): List[B] = this match {
     case head :: tail => head :: (tail ++ other)
     case Nil => other
   }
 
-  @inline
+
   final def !::[B >: A](b: B): List[B] =
     new Cons(b, this, true)
 
-  @inline
+
   final def unary_! : List[A] = {
     if (this eq Nil) {}
     else !tail
@@ -60,7 +60,7 @@ abstract sealed class List[+A] {
 
 object List {
 
-  @inline
+
   def apply[A](args: A*): List[A] = {
     var list: List[A] = Nil
     val it = args.reverseIterator
@@ -73,7 +73,7 @@ object List {
   }
 
 
-  @inline
+
   implicit def listBuilder[T](f: => List[T]): ConsWrapper[T] =
     new ConsWrapper(f)
 }
@@ -120,7 +120,7 @@ final class Cons[+A](override val head: A,
 
 object Nil extends List[⊥] {
 
-  @inline
+
   def apply[A]: List[A] = this
 
   override def isEmpty = true
@@ -131,7 +131,7 @@ object Nil extends List[⊥] {
 
   def tailDefined = false
 
-  @inline
+
   def ::[A](a: A): List[A] = new Cons[A](a, this, true)
 
   override def equals(obj: scala.Any): Boolean =

@@ -17,20 +17,20 @@ import Hascalator.{Data, _}
   * @author Glavo
   * @since 0.1.0
   */
-final class Char(@inline
+final class Char(
                  val self: Character) {
 
   {
     requireNonNull(self)
   }
 
-  @inline
+
   override def toString = self.toString
 
-  @inline
+
   override def hashCode(): scala.Int = self.hashCode()
 
-  @inline
+
   override def equals(obj: scala.Any): Boolean = {
     if (requireNonNull(self).getClass != getClass) false
     else {
@@ -43,14 +43,14 @@ final class Char(@inline
 }
 
 object Char {
-  @inline
+
   def apply(char: scala.Char): Char = new Char(char)
 
-  @inline
+
   def apply(character: Character): Char =
     new Char(requireNonNull(character))
 
-  @inline
+
   def unapply(arg: Char): Option[Character] =
     if (arg != null) Some(arg.self)
     else None

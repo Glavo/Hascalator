@@ -14,7 +14,7 @@ import scala.annotation.implicitNotFound
 abstract class Ord[T] {
   def compare(t1: T)(t2: T): Ordering
 
-  @inline
+
   final def <(t1: T)(t2: T): Bool =
     compare(t1)(t2) match {
       case LT => True
@@ -22,7 +22,7 @@ abstract class Ord[T] {
       case GT => False
     }
 
-  @inline
+
   final def <=(t1: T)(t2: T): Bool =
     compare(t1)(t2) match {
       case LT => True
@@ -30,7 +30,7 @@ abstract class Ord[T] {
       case GT => False
     }
 
-  @inline
+
   final def >(t1: T)(t2: T): Bool =
     compare(t1)(t2) match {
       case LT => False
@@ -38,7 +38,7 @@ abstract class Ord[T] {
       case GT => True
     }
 
-  @inline
+
   final def >=(t1: T)(t2: T): Bool =
     compare(t1)(t2) match {
       case LT => False
@@ -46,14 +46,14 @@ abstract class Ord[T] {
       case GT => True
     }
 
-  @inline
+
   def max(t1: T)(t2: T): T =
     compare(t1)(t2) match {
       case LT => t2
       case _ => t1
     }
 
-  @inline
+
   def min(t1: T)(t2: T): T =
     compare(t1)(t2) match {
       case LT => t1
@@ -63,29 +63,29 @@ abstract class Ord[T] {
 
 object Ord {
 
-  final class Impl[T: Ord](@inline val self: T) {
+  final class Impl[T: Ord]( val self: T) {
 
-    @inline
+
     def <(other: T): Bool =
       implicitly[Ord[T]].<(self)(other)
 
-    @inline
+
     def <=(other: T): Bool =
       implicitly[Ord[T]].<=(self)(other)
 
-    @inline
+
     def >(other: T): Bool =
       implicitly[Ord[T]].>(self)(other)
 
-    @inline
+
     def >=(other: T): Bool =
       implicitly[Ord[T]].>=(self)(other)
 
-    @inline
+
     def max(other: T): T =
       implicitly[Ord[T]].max(self)(other)
 
-    @inline
+
     def min(other: T): T =
       implicitly[Ord[T]].min(self)(other)
   }

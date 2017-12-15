@@ -15,23 +15,23 @@ import Hascalator.Data.Ratio.Ratio
   */
 package object Prelude {
 
-  @inline
+
   def error(message: String = ""): ⊥ = throw new Exception(message)
 
-  @inline
+
   def badArg: ⊥ = throw new Exception("bad argument")
 
   //Basic data types
 
   //Function
 
-  @inline
+
   def id[A](it: A): A = it
 
-  @inline
+
   def const[A, B](a: A)(b: B): A = a
 
-  @inline
+
   def flip[A, B, C](f: A => B => C): B => A => C =
     b => a => f(a)(b)
 
@@ -46,7 +46,7 @@ package object Prelude {
   /**
     * Boolean "and"
     */
-  @inline
+
   def &&(b1: Bool, b2: Bool): Bool = {
     requireNonNull(b1) && b2
   }
@@ -54,7 +54,7 @@ package object Prelude {
   /**
     * Boolean "or"
     */
-  @inline
+
   def ||(b1: Bool, b2: Bool): Bool = {
     requireNonNull(b1) || b2
   }
@@ -62,7 +62,7 @@ package object Prelude {
   /**
     * Boolean "not"
     */
-  @inline
+
   def not(b: Bool): Bool = {
     !requireNonNull(b)
   }
@@ -89,7 +89,7 @@ package object Prelude {
     * }}}
     *
     */
-  @inline
+
   def maybe[A, B](b: B)(f: A => B)(m: Maybe[A]): B = {
     requireNonNull(f)
     requireNonNull(m) match {
@@ -100,7 +100,7 @@ package object Prelude {
 
   //data Either
 
-  @inline
+
   def either[A, B, C](fl: A => C)
                      (fr: B => C)
                      (e: Either[A, B]): C = {
@@ -126,15 +126,15 @@ package object Prelude {
 
   //data Char
 
-  @inline
+
   implicit def charToCh(c: scala.Char): Char = new Char(c)
 
 
-  @inline
+
   implicit def chToChar(ch: Char): scala.Char =
     requireNonNull(ch).self
 
-  @inline
+
   implicit def chToCharacter(ch: Char): Character =
     requireNonNull(ch).self
 
@@ -147,21 +147,21 @@ package object Prelude {
   /**
     * Extract the first component of a pair.
     */
-  @inline
+
   def fst[A, B](t: (A, B)): A =
     requireNonNull(t)._1
 
   /**
     * Extract the second component of a pair.
     */
-  @inline
+
   def snd[A, B](t: (A, B)): B =
     requireNonNull(t)._2
 
   /**
     * curry converts an uncurried function to a curried function.
     */
-  @inline
+
   def curry[A, B, C](f: ((A, B)) => C): A => B => C = {
     requireNonNull(f)
     a => b => f((a, b))
@@ -170,7 +170,7 @@ package object Prelude {
   /**
     * uncurry converts a curried function to a function on pairs.
     */
-  @inline
+
   def uncurry[A, B, C](f: A => B => C): ((A, B)) => C = {
     requireNonNull(f)
 
@@ -182,15 +182,15 @@ package object Prelude {
 
   //type class Ord
 
-  @inline
+
   implicit def toOrdImpl[T: Ord](t: T): Ord.Impl[T] =
     new Ord.Impl[T](t)
 
-  @inline
+
   def compare[T: Ord](t1: T)(t2: T): Ordering =
     implicitly[Ord[T]].compare(t1)(t2)
 
-  @inline
+
   final def <[T: Ord](t1: T)(t2: T): Bool =
     compare(t1)(t2) match {
       case LT => True
@@ -198,7 +198,7 @@ package object Prelude {
       case GT => False
     }
 
-  @inline
+
   final def <=[T: Ord](t1: T)(t2: T): Bool =
     compare(t1)(t2) match {
       case LT => True
@@ -206,7 +206,7 @@ package object Prelude {
       case GT => False
     }
 
-  @inline
+
   final def >[T: Ord](t1: T)(t2: T): Bool =
     compare(t1)(t2) match {
       case LT => False
@@ -214,7 +214,7 @@ package object Prelude {
       case GT => True
     }
 
-  @inline
+
   final def >=[T: Ord](t1: T)(t2: T): Bool =
     compare(t1)(t2) match {
       case LT => False
@@ -222,14 +222,14 @@ package object Prelude {
       case GT => True
     }
 
-  @inline
+
   def max[T: Ord](t1: T)(t2: T): T =
     compare(t1)(t2) match {
       case LT => t2
       case _ => t1
     }
 
-  @inline
+
   def min[T: Ord](t1: T)(t2: T): T =
     compare(t1)(t2) match {
       case LT => t1
@@ -238,49 +238,49 @@ package object Prelude {
 
   //type class Enum
 
-  @inline
+
   implicit def toEnumImpl[E: Enum](e: E): Enum.Impl[E] =
     new Enum.Impl[E](e)
 
-  @inline
+
   def succ[E: Enum](e: E): E =
     implicitly[Enum[E]].succ(e)
 
-  @inline
+
   def pred[E: Enum](e: E): E =
     implicitly[Enum[E]].pred(e)
 
-  @inline
+
   def toEnum[E: Enum](i: Int): E =
     implicitly[Enum[E]].toEnum(i)
 
-  @inline
+
   def fromEnum[E: Enum](e: E): Int =
     implicitly[Enum[E]].fromEnum(e)
 
-  @inline
+
   def enumFrom[E: Enum](e: E): List[E] =
     implicitly[Enum[E]].enumFrom(e)
 
-  @inline
+
   def enumFromThen[E: Enum](e1: E)(e2: E): List[E] =
     implicitly[Enum[E]].enumFromThen(e1)(e2)
 
-  @inline
+
   def enumFromTo[E: Enum](e1: E)(e2: E): List[E] =
     implicitly[Enum[E]].enumFromTo(e1)(e2)
 
-  @inline
+
   def enumFromThenTo[E: Enum](e1: E)(e2: E)(e3: E): List[E] =
     implicitly[Enum[E]].enumFromThenTo(e1)(e2)(e3)
 
   //type class Bounded
 
-  @inline
+
   def minBound[B: Bounded]: B =
     implicitly[Bounded[B]].minBound
 
-  @inline
+
   def maxBound[B: Bounded]: B =
     implicitly[Bounded[B]].maxBound
 
@@ -348,7 +348,7 @@ package object Prelude {
 
 
   //Functions
-  @inline
+
   implicit def functionWapper[T1, R](f: T1 => R): Prelude.Function[T1, R] = {
     new Prelude.Function(requireNonNull(f))
   }
