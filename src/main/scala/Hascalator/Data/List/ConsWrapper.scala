@@ -1,7 +1,5 @@
 package Hascalator.Data.List
 
-import Hascalator.Lazy
-
 /**
   * Created by Glavo on 17-7-26.
   *

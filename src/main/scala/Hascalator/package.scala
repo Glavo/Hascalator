@@ -41,7 +41,4 @@ package object Hascalator {
     if (b == True) true
     else false
   }
-
-
-  implicit def byLazy[A](f: => A): Lazy[A] = new Lazy[A](() => f)
 }

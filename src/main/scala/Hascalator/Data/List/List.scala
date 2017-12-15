@@ -73,7 +73,6 @@ object List {
   }
 
 
-
   implicit def listBuilder[T](f: => List[T]): ConsWrapper[T] =
     new ConsWrapper(f)
 }
@@ -120,9 +119,6 @@ final class Cons[+A](override val head: A,
 
 object Nil extends List[⊥] {
 
-
-  def apply[A]: List[A] = this
-
   override def isEmpty = true
 
   override def head = throw new NoSuchElementException("head of empty stream")
@@ -130,9 +126,6 @@ object Nil extends List[⊥] {
   override def tail = throw new UnsupportedOperationException("tail of empty stream")
 
   def tailDefined = false
-
-
-  def ::[A](a: A): List[A] = new Cons[A](a, this, true)
 
   override def equals(obj: scala.Any): Boolean =
     obj.asInstanceOf[AnyRef] eq this
